@@ -1,8 +1,6 @@
-
-export default {}
-
-/* import { configureStore } from "@reduxjs/toolkit";
-import createReducer from "redux-toolkit-asyncthunk-wrapper"
+import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import createReducer from "redux-toolkit-asyncthunk-wrapper";
 import { fetchPosts, fetchTodos } from "./actions";
 
 const asyncThunkCollection = [
@@ -10,7 +8,7 @@ const asyncThunkCollection = [
     stateName: "todos",
     asyncThunk: fetchTodos,
     options: {
-      payloadTransformer: (payload) => {
+      payloadTransformer: (payload: any) => {
         console.log("I can modify the payload from a successful promise here.");
         return { count: payload.length };
       },
@@ -23,7 +21,13 @@ const asyncThunkCollection = [
     options: {},
   },
 ];
+const reducer = createReducer(asyncThunkCollection);
+const store = configureStore({
+  reducer,
+});
 
-export default configureStore({
-  reducer: createReducer(asyncThunkCollection),
-}); */
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
+
+export type RootState = ReturnType<typeof reducer>;
+export default store;
