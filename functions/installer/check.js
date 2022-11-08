@@ -23,7 +23,6 @@ exports.handler = async function (context, event, callback) {
 
     // ---------- check service ----------------------------------------
     const service_sid        = await getParam(context, 'SERVICE_SID');
-    const flex_plugin_sid    = await getParam(context, 'FLEX_PLUGIN_SID');
     const environment_domain = service_sid ? await getParam(context, 'ENVIRONMENT_DOMAIN') : null;
     const service_url        = service_sid ? `https://www.twilio.com/console/functions/api/start/${service_sid}` : null;
 
@@ -31,9 +30,8 @@ exports.handler = async function (context, event, callback) {
 
     const response = {
       //deploy_state: (service_sid && flex_plugin_sid) ? 'DEPLOYED' : 'NOT-DEPLOYED',
-      deploy_state: (service_sid && flex_plugin_sid) ? 'DEPLOYED' : 'NOT-DEPLOYED',
+      deploy_state: (service_sid) ? 'DEPLOYED' : 'NOT-DEPLOYED',
       service_sid: service_sid,
-      flex_plug_sid: flex_plugin_sid,
       service_url: service_url,
     };
     console.log(THIS, response);

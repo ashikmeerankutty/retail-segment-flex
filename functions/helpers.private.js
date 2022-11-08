@@ -21,10 +21,6 @@ async function getParam(context, key) {
     context.APPLICATION_NAME,
     "undefined .env environment variable APPLICATION_NAME!!!"
   );
-  assert(
-    context.CUSTOMER_NAME,
-    "undefined .env environment variable CUSTOMER_NAME!!!"
-  );
 
   if (
     key !== "SERVICE_SID" && // avoid warning
@@ -176,26 +172,13 @@ async function getParam(context, key) {
             "Unable to create a Twilio Sync Service!!! ABORTING!!!"
           );
         });
-      console.log(`Created Sync service (${service.sid}) ...`);
+      console.log(`Created Sync service (${sid}) ...`);
       await setParam(context, key, sid);
 
       return sid;
     }
   }
 }
-
-/* --------------------------------------------------------------------------------
- * deprovision environment variable
- * --------------------------------------------------------------------------------
- */
-async function provisionParams(context) {
-  const client = context.getTwilioClient();
-
-  return {
-    VERIFY_SID: await getParam(context, "VERIFY_SID"),
-  };
-}
-
 /* --------------------------------------------------------------------------------
  * deprovision environment variable
  * --------------------------------------------------------------------------------

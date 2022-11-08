@@ -9,8 +9,12 @@ const useWebchat = () => {
       root2.setAttribute("id", "root2");
       document.body.appendChild(root2);
 
+      const backendUrl = window.location.origin;
+      const domain = window.location.host;
       Twilio.initWebchat({
-        serverUrl: process.env.server,
+        serverUrl: backendUrl.includes("localhost:")
+          ? "http://localhost:3000"
+          : `https://${domain}`,
         theme: {
           isLight: true,
         },

@@ -8,8 +8,13 @@
     "deploy": "twilio-run deploy"
   },
   "dependencies": {
-    "twilio": "^3.56",
-    "@twilio/runtime-handler": "1.2.5"
+    "@twilio/runtime-handler": "1.2.5",
+    "assert": "2.0.0",
+    "configure-env": "2.0.0-1",
+    "fs": "0.0.1-security",
+    "node-fetch": "3.2.10",
+    "path": "0.12.7",
+    "twilio": "^3.56"
   },
   "devDependencies": {
     "twilio-run": "^3.4.5"

@@ -12,11 +12,6 @@
  */
 const THIS = "deploy";
 
-const fetch = require("node-fetch");
-const path = require("path");
-const fs = require("fs");
-const assert = require("assert");
-const { execSync } = require("child_process");
 const { getParam } = require(Runtime.getFunctions()["helpers"].path);
 const step_total = 3; // TODO: must set manually based on your implementation!
 let step = 0;
@@ -78,9 +73,6 @@ exports.handler = async function (context, event, callback) {
           status: event.action,
           deployables: [
             { serverless_service_sid: service_sid },
-            { flex_plugin_sid: plugin_sid },
-            { studio_flow_webchat_sid: studio_flow_webchat_sid },
-            { studio_flow_ivr_sid: studio_flow_ivr_sid },
           ],
         };
         return callback(null, response);
