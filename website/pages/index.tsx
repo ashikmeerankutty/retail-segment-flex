@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import { fetchPosts } from "../redux/actions";
 import { useAppDispatch } from "../redux/store";
 
@@ -8,6 +9,7 @@ const Test = () => {
   return (
     <div onClick={(e)=>dispatch(fetchPosts())}>
       <span>test</span>
+      <Footer />
     </div>
   );
 };

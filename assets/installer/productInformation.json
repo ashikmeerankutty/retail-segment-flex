@@ -1,0 +1,149 @@
+{
+  "products": [
+    {
+      "id": 0,
+      "title": "Dri-Fit Run",
+      "subTitle": "Women's Running Top",
+      "imagePaths": [
+        "product0_0.png"
+      ],
+      "price": "",
+      "priceUnit": "USD",
+      "availableColors": [],
+      "availableSizes": []
+    },
+    {
+      "id": 1,
+      "title": "Owl Shoes Runners 2023",
+      "subTitle": "Women's Running Shoes",
+      "imagePaths": [
+        "product1_0.png",
+        "product1_1.png",
+        "product1_2.png",
+        "product1_3.png"
+      ],
+      "price": "120.00",
+      "priceUnit": "USD",
+      "availableColors": [
+        {
+          "available": true,
+          "color": "black"
+        },
+        {
+          "available": true,
+          "color": "mauve",
+          "colorSecondary": "white"
+        },
+        {
+          "available": true,
+          "color": "grey",
+          "colorSecondary": "darkGrey"
+        },
+        {
+          "available": true,
+          "color": "darkGrey",
+          "colorSecondary": "white"
+        },
+        {
+          "available": true,
+          "color": "green",
+          "colorSecondary": "white"
+        },
+        {
+          "available": true,
+          "color": "mauve2",
+          "colorSecondary": "white"
+        },
+        {
+          "available": true,
+          "color": "burnt-orange",
+          "colorSecondary": "white"
+        }
+      ],
+      "availbleSizes": [
+        {
+          "size": "5",
+          "available": false
+        },
+        {
+          "size": "5.5",
+          "available": false
+        },
+        {
+          "size": "6",
+          "available": false
+        },
+        {
+          "size": "6.5",
+          "available": false
+        },
+        {
+          "size": "7",
+          "available": true
+        },
+        {
+          "size": "7.5",
+          "available": false
+        },
+        {
+          "size": "8",
+          "available": false
+        },
+        {
+          "size": "8.5",
+          "available": false
+        },
+        {
+          "size": "9",
+          "available": true
+        },
+        {
+          "size": "9.5",
+          "available": false
+        },
+        {
+          "size": "10",
+          "available": false
+        },
+        {
+          "size": "10.5",
+          "available": true
+        },
+        {
+          "size": "11",
+          "available": true
+        },
+        {
+          "size": "11.5",
+          "available": true
+        },
+        {
+          "size": "12",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Everyday Plus Cushion",
+      "subTitle": "Ankle Socks",
+      "imagePaths": [
+        "product2_0.png"
+      ],
+      "price": "",
+      "priceUnit": "USD",
+      "availableColors": [],
+      "availableSizes": []
+    },
+    {
+      "id": 3,
+      "title": "Air Joggers",
+      "subTitle": "Women's Mid-Rise Fleece",
+      "imagePaths": [],
+      "price": "",
+      "priceUnit": "USD",
+      "availableColors": [],
+      "availableSizes": []
+    }
+  ]
+}
