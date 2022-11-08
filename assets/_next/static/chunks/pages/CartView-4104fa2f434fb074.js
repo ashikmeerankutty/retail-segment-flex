@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[537],{8767:function(n,u,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/CartView",function(){return t(5354)}])},5354:function(n,u,t){"use strict";t.r(u);var _=t(5893),e=function(){return(0,_.jsx)(_.Fragment,{})};u.default=e}},function(n){n.O(0,[774,888,179],function(){return n(n.s=8767)}),_N_E=n.O()}]);
