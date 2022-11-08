@@ -13,7 +13,7 @@
 const THIS = "deploy";
 
 const { getParam } = require(Runtime.getFunctions()["helpers"].path);
-const step_total = 3; // TODO: must set manually based on your implementation!
+const step_total = 4; // TODO: must set manually based on your implementation!
 let step = 0;
 function log_step(message) {
   step++;
@@ -30,10 +30,16 @@ exports.handler = async function (context, event, callback) {
 
   step = 0; // reset step
 
-  assert(context.DOMAIN_NAME.startsWith("localhost:"), `Can only run on localhost!!!`);
+  assert(
+    context.DOMAIN_NAME.startsWith("localhost:"),
+    `Can only run on localhost!!!`
+  );
   console.time(THIS);
   try {
-    assert(event.configuration.APPLICATION_NAME, "missing APPLICATION_NAME variable!!!");
+    assert(
+      event.configuration.APPLICATION_NAME,
+      "missing APPLICATION_NAME variable!!!"
+    );
     assert(event.action, "missing event.action variable!!!");
 
     const env = event.configuration;
@@ -46,16 +52,20 @@ exports.handler = async function (context, event, callback) {
     switch (event.action) {
       case "DEPLOY":
       case "REDEPLOY": {
-
         log_step(`---------- Provision service resources`);
-        const verify_sid = await getParam(context, 'VERIFY_SID');
-        assert(verify_sid, 'Unabled to provision Verify service!!!');
-        const sync_sid = await getParam(context, 'SYNC_SID');
-        assert(sync_sid, 'Unabled to provision Sync service!!!');
+        const verify_sid = await getParam(context, "VERIFY_SID");
+        assert(verify_sid, "Unabled to provision Verify service!!!");
+        const sync_sid = await getParam(context, "SYNC_SID");
+        assert(sync_sid, "Unabled to provision Sync service!!!");
 
-        assert(env.ADMINISTRATOR_PHONE, 'Missing ADMINISTRATOR_PHONE varaible!!!');
+        assert(
+          env.ADMINISTRATOR_PHONE,
+          "Missing ADMINISTRATOR_PHONE varaible!!!"
+        );
 
-        log_step(`---------- Deploying serverless service: ${event.configuration.APPLICATION_NAME}`);
+        log_step(
+          `---------- Deploying serverless service: ${event.configuration.APPLICATION_NAME}`
+        );
         const { service_sid, functions_hostname } = await deploy_service(
           context,
           event.configuration
@@ -68,12 +78,13 @@ exports.handler = async function (context, event, callback) {
           .update({ uiEditable: true });
         log(`Completed deployment of serverless service: ${service_sid}`);
 
+        log_step('("---------- Deploying product information to Sync ...');
+        await deploy_products_sync_map(env, client, sync_sid);
+        log("Completed deployment of products to Sync.");
 
         const response = {
           status: event.action,
-          deployables: [
-            { serverless_service_sid: service_sid },
-          ],
+          deployables: [{ serverless_service_sid: service_sid }],
         };
         return callback(null, response);
       }
@@ -194,11 +205,66 @@ async function deploy_service(context, envrionmentVariables = {}) {
     console.log(evt.message);
   });
 
-  log_step(
-    `---------- Deploying serverless service: ${envrionmentVariables.APPLICATION_NAME}`
-  );
   const result = await serverlessClient.deployProject(deployOptions);
   service_sid = await getParam(context, "SERVICE_SID");
 
   return { service_sid, functions_hostname: result.domain };
+}
+
+
+/* --------------------------------------------------------------------------------
+ * deploys product sync map
+ * --------------------------------------------------------------------------------
+ */
+async function deploy_products_sync_map(env, client, sync_sid) {
+  const fs = require("fs");
+
+  const sync_map_products_fname = env.SYNC_PRODUCT_MAP_FNAME
+
+  const productsPath =
+    Runtime.getAssets()["/installer/productInformation.json"].path;
+
+  function getProducts() {
+    try {
+      const json = JSON.parse(fs.readFileSync(productsPath, "utf8"));
+      return json.products;
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
+  }
+
+  const productMapSidPromise = () =>
+    client.sync
+      .services(sync_sid)
+      .syncMaps.list()
+      .then((list) =>
+        list.find((map) => map.uniqueName === sync_map_products_fname)
+      )
+      .then((map) => {
+        if (!map) {
+          return client.sync
+            .services(sync_sid)
+            .syncMaps.create({ uniqueName: sync_map_products_fname })
+            .then((map) => map.sid);
+        }
+        return client.sync
+          .services(sync_sid)
+          .syncMaps(map.sid)
+          .remove()
+          .then(() => productMapSidPromise());
+      });
+
+  const productMapSid = await productMapSidPromise();
+
+  const products = getProducts();
+
+  const promises = products.map((product) =>
+    client.sync
+      .services(sync_sid)
+      .syncMaps(productMapSid)
+      .syncMapItems.create({ key: product.id, data: product })
+  );
+
+  await Promise.all(promises);
 }
