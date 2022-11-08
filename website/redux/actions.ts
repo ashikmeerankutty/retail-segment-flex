@@ -31,3 +31,18 @@ export const getProducts = createAsyncThunk(
     }
   }
 );
+
+export const getImageTest = createAsyncThunk<string, { names: string[] }>(
+  "Get Image Test",
+  async (params, { rejectWithValue }) => {
+    try {
+      const res = await Axios.post(`${getBaseUrl()}/website/images`, {
+        names: params.names,
+      }).then((resp) => resp.data.result);
+      if (!res) return rejectWithValue("Request failed");
+      return res;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);

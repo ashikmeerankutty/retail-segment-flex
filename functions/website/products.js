@@ -36,22 +36,7 @@ exports.handler = async (context, event, callback) => {
           .syncMaps(map.sid)
           .syncMapItems.list()
           .then((resp) =>
-            resp.map((item) => {
-              const { data } = item;
-              const { imagePaths } = data;
-
-              const newImagePaths = imagePaths.map((path) => {
-                const fileLoc = Object.keys(Runtime.getAssets()).find((key) =>
-                  key.includes(path)
-                );
-                return Runtime.getAssets()[fileLoc].path;
-              });
-
-              return {
-                ...item.data,
-                imagePaths: newImagePaths,
-              };
-            })
+            resp.map((item) => item.data)
           );
       })
       .catch((err) => {

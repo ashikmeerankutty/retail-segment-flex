@@ -20,3 +20,8 @@
         availableColors: IAvailableColor[];
         availbleSizes: IAvailbleSize[];
     }
+
+    export interface IServerImageMetadata {
+        name: string
+        b64: string
+    }

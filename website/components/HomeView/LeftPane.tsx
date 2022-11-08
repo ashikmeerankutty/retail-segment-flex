@@ -2,7 +2,7 @@ import { Box, Button, Flex, Stack, Text } from "@twilio-paste/core";
 
 const LeftPane = () => {
   return (
-    <Flex grow vAlignContent="center" hAlignContent="center" height="100%">
+    <Flex grow vAlignContent="center" hAlignContent="center" height="100%" width="50%">
       <Box width={300} style={{ textAlign: "center" }}>
         <Stack orientation="vertical" spacing="space150">
           <Text fontSize="fontSize90" as="h1">
