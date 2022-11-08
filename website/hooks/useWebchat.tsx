@@ -11,6 +11,7 @@ const useWebchat = () => {
 
       const backendUrl = window.location.origin;
       const domain = window.location.host;
+      console.log("HERE")
       Twilio.initWebchat({
         serverUrl: backendUrl.includes("localhost:")
           ? "http://localhost:3000"

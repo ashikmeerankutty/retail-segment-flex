@@ -169,3 +169,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# webchat files used for development
+assets/main.js
+assets/main.js.map

@@ -1,15 +1,33 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-export const fetchTodos = createAsyncThunk("Fetch Todos", async (_params) => {
-  const data = await axios
-    .get("https://jsonplaceholder.typicode.com/todos/")
-    .then((resp) => resp.data);
-  return data;
-});
+import Axios from "axios";
+import { getBaseUrl } from "../util";
 
-export const fetchPosts = createAsyncThunk("Fetch Posts", async (_params) => {
-  const data = await axios
-    .get("https://jsonplaceholder.typicode.com/posts/")
-    .then((resp) => resp.data);
-  return data;
-});
+export const getSegmentCredentials = createAsyncThunk(
+  "Get Segment Credentials",
+  async (_params, { rejectWithValue }) => {
+    try {
+      const res = await Axios.post(`${getBaseUrl()}/website/segment`).then(
+        (resp) => resp.data.result
+      );
+      if (!res) return rejectWithValue("Request failed");
+      return res;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const getProducts = createAsyncThunk(
+  "Get Products",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await Axios.post(`${getBaseUrl()}/website/products`).then(
+        (resp) => resp.data.result
+      );
+      if (!res) return rejectWithValue("Request failed");
+      return res;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);

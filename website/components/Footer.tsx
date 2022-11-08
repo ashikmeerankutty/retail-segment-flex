@@ -11,7 +11,7 @@ const Footer = () => {
       >
         <Flex grow vertical height="100%" vAlignContent="center">
           <Stack orientation="horizontal" spacing="space100">
-            <Text as="p">&copy; 2020 Cloud City Healthcare</Text>
+            <Text as="p">&copy; 2022 Cloud City Healthcare</Text>
             <Anchor href="#">Privacy Policy</Anchor>
             <Anchor href="#">Terms of Service</Anchor>
           </Stack>

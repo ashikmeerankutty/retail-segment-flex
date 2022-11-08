@@ -1,24 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import createReducer from "redux-toolkit-asyncthunk-wrapper";
-import { fetchPosts, fetchTodos } from "./actions";
+import { getProducts, getSegmentCredentials } from "./actions";
 
 const asyncThunkCollection = [
   {
-    stateName: "todos",
-    asyncThunk: fetchTodos,
+    stateName: "segmentCredentials",
+    asyncThunk: getSegmentCredentials,
     options: {
-      payloadTransformer: (payload: any) => {
-        console.log("I can modify the payload from a successful promise here.");
-        return { count: payload.length };
-      },
-      initialState: [],
+      initialState: "",
     },
   },
   {
-    stateName: "posts",
-    asyncThunk: fetchPosts,
-    options: {},
+    stateName: "products",
+    asyncThunk: getProducts,
   },
 ];
 const reducer = createReducer(asyncThunkCollection);
