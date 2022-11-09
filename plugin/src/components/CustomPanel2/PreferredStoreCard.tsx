@@ -11,16 +11,16 @@ const PreferredStoreCard = () => {
     <Box marginBottom={"space30"} minWidth={"100%"}>
       <Card>
         <Flex>
-          <Flex width={"90%"}>
-            <Box marginBottom={"space50"}>
+          <Box width={"90%"}>
+            <Box marginBottom={"space50"} minWidth={"100%"}>
               <Text as="h2" fontSize={"fontSize40"} fontWeight={"fontWeightSemibold"}>
                 Preferred Store
               </Text>
             </Box>
-          </Flex>
-          <Flex width={"10%"}>
+          </Box>
+          <Box width={"10%"}>
             <EditIcon decorative={false} title="Description of icon" />
-          </Flex>
+          </Box>
         </Flex>
         <Stack orientation={"vertical"} spacing={"space30"}>
           <Box marginBottom={"space30"}>

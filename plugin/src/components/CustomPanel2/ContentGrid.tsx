@@ -13,22 +13,18 @@ const ContentGrid = () => {
     description: "Page Viewed",
     passed: true,
   }]
-  
+
   return (
-    <Box padding={"space40"}>
-      <Grid equalColumnHeights>
+    <Box padding={"space40"} width={"100%"}>
+      <Grid gutter={"space20"}>
         <Column span={5}>
-          <Flex vertical>
-            <Flex grow>
+          <Box width={"100%"}> 
+            <Flex vertical>
               <MemberInfoCard/>
-            </Flex>
-            <Flex grow>
               <PreferredStoreCard/>
-            </Flex>
-            <Flex grow>
               <MemberPointsCard/>
             </Flex>
-          </Flex>
+          </Box>
         </Column>
         <Column span={7}>
           <CustomerJourneyCard data={journeys}/>

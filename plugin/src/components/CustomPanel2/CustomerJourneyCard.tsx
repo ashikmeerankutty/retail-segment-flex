@@ -40,7 +40,7 @@ function timeSince(date: any) {
 
 export const CustomerJourneyCard = ({ data }: { data: Journey[] }) => {
   return (
-    <Box minWidth={"100%"} minHeight={"50vh"}>
+    <Box minWidth={"100%"} minHeight={"50leaguevh"}>
       <Card>
         <Box marginBottom={"space40"}>
           <Text as="h2" fontSize={"fontSize40"} fontWeight={"fontWeightSemibold"}>
@@ -54,7 +54,7 @@ export const CustomerJourneyCard = ({ data }: { data: Journey[] }) => {
                 <Text fontSize={"fontSize40"} fontWeight={"fontWeightMedium"} as={"h3"}>Newest Events</Text>
               </Box>
               {data.map((item: Journey, index: number) => (
-                <Box className="journey-item" key={index}>
+                <Box className="journey-item" key={index} padding={"space20"}>
                   <Flex>
                     <Text marginBottom={"space40"} as={"span"}>{timeSince(item.time)}</Text>
                     <Box className="image-block">
