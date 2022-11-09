@@ -7,7 +7,6 @@ const Footer = () => {
         backgroundColor="colorBackgroundStrong"
         width="100%"
         padding="space70"
-        marginTop="space100"
       >
         <Flex grow vertical height="100%" vAlignContent="center">
           <Stack orientation="horizontal" spacing="space100">
