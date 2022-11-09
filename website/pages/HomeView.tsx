@@ -1,12 +1,12 @@
 import { Box, Flex } from "@twilio-paste/core";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import LeftPane from "../components/HomeView/LeftPane";
-import RightPane from "../components/HomeView/RightPane";
+import LeftPane from "../HomeView/LeftPane";
+import RightPane from "../HomeView/RightPane";
 import useSegment from "../hooks/useSegment";
 import useWebchat from "../hooks/useWebchat";
 
-const Test = () => {
+const HomeView = () => {
   useSegment();
   useWebchat();
 
@@ -29,4 +29,4 @@ const Test = () => {
     </div>
   );
 };
-export default Test;
+export default HomeView;

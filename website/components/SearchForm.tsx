@@ -10,7 +10,7 @@ const SearchForm = () => {
         id={`navbar-input`}
         name="search"
         type="search"
-        placeholder="Search"
+        placeholder="search"
         insertAfter={
           <Text as="span" fontWeight="fontWeightSemibold">
             <SearchIcon decorative={false} title="Description of icon" />
