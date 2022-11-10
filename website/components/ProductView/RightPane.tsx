@@ -1,50 +1,16 @@
 import { Box, Button, Flex, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useMemo } from "react";
 import { IProduct } from "../../Global.types";
-import { getProducts } from "../../redux/actions";
-import { productsSelector } from "../../redux/selectors";
-import { useAppDispatch } from "../../redux/store";
 import { getBaseUrl } from "../../util";
 import SizeGrid from "../SizeSelection/SizeGrid";
 
-const RightPane = () => {
-  const {
-    data,
-    fetching: fetchingProducts,
-    fetchingFailure: fetchingProductsFailure,
-    fetchingSuccess: fetchingProductsSuccess,
-  } = useSelector(productsSelector);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
+export interface IProductRightPaneProps {
+  onCheckout: () => void;
+  product: IProduct;
+}
 
-  useEffect(() => {
-    if (
-      !fetchingProducts &&
-      !fetchingProductsFailure &&
-      !fetchingProductsSuccess
-    ) {
-      dispatch(getProducts());
-    }
-  }, [
-    dispatch,
-    fetchingProducts,
-    fetchingProductsFailure,
-    fetchingProductsSuccess,
-  ]);
-
-  const product: IProduct = useMemo(() => {
-    if (data.length > 0 && router.query.productId) {
-      return data.find(
-        (products: IProduct) =>
-          products.id.toString() === router.query.productId
-      );
-    }
-    return undefined;
-  }, [data, router.query.productId]);
-
+const RightPane = ({ onCheckout, product }: IProductRightPaneProps) => {
   const productView = useMemo(() => {
     if (product) {
       return (
@@ -67,10 +33,10 @@ const RightPane = () => {
 
           <SizeGrid sizes={product.availbleSizes} />
 
-          <Flex hAlignContent="center" paddingTop='space50'>
+          <Flex hAlignContent="center" paddingTop="space50">
             <Stack orientation="vertical" spacing="space50">
               <Box width={238}>
-                <Button fullWidth variant="primary">
+                <Button fullWidth variant="primary" onClick={onCheckout}>
                   Add to cart
                 </Button>
               </Box>
@@ -85,7 +51,7 @@ const RightPane = () => {
       );
     }
     return <></>;
-  }, [product]);
+  }, [onCheckout, product]);
 
   return <Box>{productView}</Box>;
 };
