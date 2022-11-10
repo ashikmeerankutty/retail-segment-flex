@@ -1,44 +1,19 @@
 import { Box, Stack } from "@twilio-paste/core";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { getProducts } from "../../redux/actions";
-import { productsSelector } from "../../redux/selectors";
-import { useAppDispatch } from "../../redux/store";
+import { useMemo } from "react";
 import { IProduct } from "../../Global.types";
 import { getBaseUrl } from "../../util";
 import { useRouter } from "next/router";
 
-const LeftPane = () => {
-  const {
-    data,
-    fetching: fetchingProducts,
-    fetchingFailure: fetchingProductsFailure,
-    fetchingSuccess: fetchingProductsSuccess,
-  } = useSelector(productsSelector);
-  const dispatch = useAppDispatch();
+export interface IProductLeftPaneProps {
+  product: IProduct;
+}
+
+const LeftPane = ({ product }: IProductLeftPaneProps) => {
   const router = useRouter();
 
-  useEffect(() => {
-    if (
-      !fetchingProducts &&
-      !fetchingProductsFailure &&
-      !fetchingProductsSuccess
-    ) {
-      dispatch(getProducts());
-    }
-  }, [
-    dispatch,
-    fetchingProducts,
-    fetchingProductsFailure,
-    fetchingProductsSuccess,
-  ]);
-
   const products = useMemo(() => {
-    if (data.length > 0) {
-      const product = data.find(
-        (p: IProduct) => p.id.toString() === router.query.productId
-      );
+    if (product) {
       return product.imagePaths.map((path: string) => (
         <Box
           onClick={() => router.push("/ProductView")}
@@ -62,7 +37,7 @@ const LeftPane = () => {
       ));
     }
     return <></>;
-  }, [data, router]);
+  }, [product, router]);
 
   return (
     <Box width={700} marginRight="space100">
