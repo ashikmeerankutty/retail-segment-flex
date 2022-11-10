@@ -4,6 +4,7 @@ const useWebchat = () => {
   //initialize Twilio webchat
   useEffect(() => {
     if (!document.getElementById("root2") && window.Twilio) {
+      console.log("HERE1")
       const Twilio = window.Twilio;
       const root2 = document.createElement("div");
       root2.setAttribute("id", "root2");

@@ -8,7 +8,8 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "build-export": "npm run build && npm run export && mv out/* ../assets/website/"
+    "build-export": "npm run build && npm run export && mv out/* ../assets/website/",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.0",
@@ -33,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "eslint": "8.27.0",
     "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-react": "7.31.10"
+    "eslint-plugin-react": "7.31.10",
+    "husky": "^8.0.0"
   }
 }

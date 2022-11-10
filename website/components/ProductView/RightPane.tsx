@@ -45,9 +45,9 @@ const RightPane = () => {
     return undefined;
   }, [data, router.query.productId]);
 
-  return product ? (
-    <Flex grow hAlignContent="center" height="100%" width="50%">
-      <Box>
+  const productView = useMemo(() => {
+    if (product) {
+      return (
         <Stack orientation="vertical" spacing="space50">
           <Text fontSize="fontSize50" as="p">
             {product.title ?? ""}
@@ -82,10 +82,15 @@ const RightPane = () => {
             </Stack>
           </Flex>
         </Stack>
-      </Box>
+      );
+    }
+    return <></>;
+  }, [product]);
+
+  return (
+    <Flex grow hAlignContent="center" height="100%" width="50%">
+      <Box>{productView}</Box>
     </Flex>
-  ) : (
-    <></>
   );
 };
 export default RightPane;
