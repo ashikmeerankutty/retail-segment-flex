@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
-import { getBaseUrl } from "../util";
+import { getBaseUrl } from "../../util";
 
 export const getSegmentCredentials = createAsyncThunk(
   "Get Segment Credentials",

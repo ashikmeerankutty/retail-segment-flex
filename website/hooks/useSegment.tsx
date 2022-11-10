@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getSegmentCredentials } from "../redux/actions";
-import { segmentCredentialsSelector } from "../redux/selectors";
-import { useAppDispatch } from "../redux/store";
+import { getSegmentCredentials } from "../public/redux/actions";
+import { segmentCredentialsSelector } from "../public/redux/selectors";
+import { useAppDispatch } from "../public/redux/store";
 
 const useSegment = () => {
   const dispatch = useAppDispatch();

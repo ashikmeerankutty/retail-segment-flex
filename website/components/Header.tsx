@@ -14,7 +14,11 @@ import { StarIcon } from "@twilio-paste/icons/cjs/StarIcon";
 import { ChevronDoubleRightIcon } from "@twilio-paste/icons/cjs/ChevronDoubleRightIcon";
 import SearchForm from "./SearchForm";
 
-const Header = () => {
+export interface HeaderProps {
+  showNavOnly?: boolean;
+}
+
+const Header = ({showNavOnly = false}: HeaderProps) => {
   return (
     <Box>
       <Stack orientation="vertical" spacing="space30">
@@ -44,6 +48,7 @@ const Header = () => {
             </Stack>
           </div>
         </Box>
+        {!showNavOnly ?
         <Box paddingRight="space100" paddingLeft="space100">
           <Grid>
             <Column offset={3} span={6}>
@@ -78,6 +83,7 @@ const Header = () => {
             </Column>
           </Grid>
         </Box>
+      : <></>}
       </Stack>
     </Box>
   );

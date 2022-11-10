@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { IProduct } from "../../Global.types";
-import { getProducts } from "../../redux/actions";
-import { productsSelector } from "../../redux/selectors";
-import { useAppDispatch } from "../../redux/store";
+import { getProducts } from "../../public/redux/actions";
+import { productsSelector } from "../../public/redux/selectors";
+import { useAppDispatch } from "../../public/redux/store";
 import { getBaseUrl } from "../../util";
 import SizeGrid from "../SizeSelection/SizeGrid";
 
@@ -45,7 +45,7 @@ const RightPane = () => {
     return undefined;
   }, [data, router.query.productId]);
 
-  return (
+  return product ? (
     <Flex grow hAlignContent="center" height="100%" width="50%">
       <Box>
         <Stack orientation="vertical" spacing="space50">
@@ -84,6 +84,8 @@ const RightPane = () => {
         </Stack>
       </Box>
     </Flex>
+  ) : (
+    <></>
   );
 };
 export default RightPane;
