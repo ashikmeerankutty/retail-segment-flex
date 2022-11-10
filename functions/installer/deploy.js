@@ -79,7 +79,7 @@ exports.handler = async function (context, event, callback) {
         log(`Completed deployment of serverless service: ${service_sid}`);
 
         log_step('("---------- Deploying product information to Sync ...');
-        await deploy_products_sync_map(env, client, sync_sid);
+        await deploy_sync_maps(env, client, sync_sid);
         log("Completed deployment of products to Sync.");
 
         const response = {
@@ -216,10 +216,11 @@ async function deploy_service(context, envrionmentVariables = {}) {
  * deploys product sync map
  * --------------------------------------------------------------------------------
  */
-async function deploy_products_sync_map(env, client, sync_sid) {
+async function deploy_sync_maps(env, client, sync_sid) {
   const fs = require("fs");
 
   const sync_map_products_fname = env.SYNC_PRODUCT_MAP_FNAME
+  const sync_map_cart_fname = env.SYNC_CART_MAP_FNAME
 
   const productsPath =
     Runtime.getAssets()["/installer/productInformation.json"].path;
@@ -234,28 +235,30 @@ async function deploy_products_sync_map(env, client, sync_sid) {
     }
   }
 
-  const productMapSidPromise = () =>
+  //Delete (if exists) sync map and recreate.
+  const createSyncMapPromise = (fname) =>
     client.sync
       .services(sync_sid)
       .syncMaps.list()
       .then((list) =>
-        list.find((map) => map.uniqueName === sync_map_products_fname)
+        list.find((map) => map.uniqueName === fname)
       )
       .then((map) => {
         if (!map) {
           return client.sync
             .services(sync_sid)
-            .syncMaps.create({ uniqueName: sync_map_products_fname })
+            .syncMaps.create({ uniqueName: fname })
             .then((map) => map.sid);
         }
         return client.sync
           .services(sync_sid)
           .syncMaps(map.sid)
           .remove()
-          .then(() => productMapSidPromise());
+          .then(() => createSyncMapPromise());
       });
 
-  const productMapSid = await productMapSidPromise();
+  const cartMapSid = await createSyncMapPromise(sync_map_cart_fname)
+  const productMapSid = await createSyncMapPromise(sync_map_products_fname);
 
   const products = getProducts();
 

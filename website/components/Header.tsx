@@ -11,14 +11,50 @@ import {
   Text,
 } from "@twilio-paste/core";
 import { StarIcon } from "@twilio-paste/icons/cjs/StarIcon";
-import { ChevronDoubleRightIcon } from "@twilio-paste/icons/cjs/ChevronDoubleRightIcon";
 import SearchForm from "./SearchForm";
+import Image from "next/image";
+import { useSelector } from "react-redux";
+import { syncTokenSelector } from "../redux/selectors";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../redux/store";
+import { getSyncToken } from "../redux/actions";
+import { SyncClient } from "twilio-sync";
 
 export interface HeaderProps {
   showNavOnly?: boolean;
 }
 
 const Header = ({showNavOnly = false}: HeaderProps) => {
+  const [syncClient, setSyncClient] = useState<SyncClient>();
+  const [cartItems, setCartItems] = useState<number>(0);
+  const {
+    fetching,
+    fetchingFailure,
+    fetchingSuccess,
+    data: tokenData,
+  } = useSelector(syncTokenSelector);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!fetching && !fetchingFailure && !fetchingSuccess) {
+      dispatch(getSyncToken());
+    }
+  }, [dispatch, fetching, fetchingFailure, fetchingSuccess]);
+
+  useEffect(() => {
+    if (!!tokenData.token) {
+      const client = new SyncClient(tokenData.token, { logLevel: "debug" });
+      setSyncClient(client);
+      client.map("Cart").then((map) => {
+        map.on("itemAdded", (args) => {
+          setCartItems((state) => state + 1);
+          //console.log('args.item.data:', args.item.data);
+        });
+      });
+    }
+  }, [tokenData.token]);
+
   return (
     <Box>
       <Stack orientation="vertical" spacing="space30">
@@ -72,12 +108,19 @@ const Header = ({showNavOnly = false}: HeaderProps) => {
                   <Button variant="secondary">
                     <StarIcon decorative={false} title="Description of icon" />
                   </Button>
-                  <Button variant="secondary">
-                    <ChevronDoubleRightIcon
-                      decorative={false}
-                      title="Description of icon"
-                    />
-                  </Button>
+                  <Box style={{ position: "relative" }}>
+                    {cartItems > 0 && (
+                      <span className="badge">{cartItems}</span>
+                    )}
+                    <Button variant="secondary">
+                      <Image
+                        src="/cart_logo.svg"
+                        height={20}
+                        width={20}
+                        alt="cart"
+                      />
+                    </Button>
+                  </Box>
                 </Stack>
               </Flex>
             </Column>

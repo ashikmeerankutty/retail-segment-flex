@@ -2,7 +2,8 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { Theme } from "@twilio-paste/core/theme";
-import store from "../public/redux/store";
+import store from "../redux/store";
+import "./styles.css"
 
 declare global {
   interface Window {

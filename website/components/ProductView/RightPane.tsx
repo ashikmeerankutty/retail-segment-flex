@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { IProduct } from "../../Global.types";
-import { getProducts } from "../../public/redux/actions";
-import { productsSelector } from "../../public/redux/selectors";
-import { useAppDispatch } from "../../public/redux/store";
+import { getProducts } from "../../redux/actions";
+import { productsSelector } from "../../redux/selectors";
+import { useAppDispatch } from "../../redux/store";
 import { getBaseUrl } from "../../util";
 import SizeGrid from "../SizeSelection/SizeGrid";
 

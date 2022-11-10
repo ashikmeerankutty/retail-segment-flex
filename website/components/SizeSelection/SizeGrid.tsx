@@ -1,4 +1,4 @@
-import { Flex, Grid, Stack, Text } from "@twilio-paste/core";
+import { Stack, Text } from "@twilio-paste/core";
 import { useMemo } from "react";
 import { IAvailbleSize } from "../../Global.types";
 import SizeButton from "./SizeButton";

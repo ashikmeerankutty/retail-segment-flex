@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getProducts } from "../public/redux/actions";
-import { productsSelector } from "../public/redux/selectors";
-import { useAppDispatch } from "../public/redux/store";
+import { getProducts } from "../redux/actions";
+import { productsSelector } from "../redux/selectors";
+import { useAppDispatch } from "../redux/store";
 
 const useProducts = () => {
   const dispatch = useAppDispatch();
