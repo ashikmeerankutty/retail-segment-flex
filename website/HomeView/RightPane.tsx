@@ -79,15 +79,7 @@ const RightPane = () => {
   }, [data, router]);
 
   return (
-    <Flex
-      grow
-      vAlignContent="center"
-      hAlignContent="center"
-      height="100%"
-      width="50%"
-    >
-      <Box width={600}>{products}</Box>
-    </Flex>
+      <Box width={600} marginLeft='space100'>{products}</Box>
   );
 };
 export default RightPane;

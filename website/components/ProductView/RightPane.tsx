@@ -67,7 +67,7 @@ const RightPane = () => {
 
           <SizeGrid sizes={product.availbleSizes} />
 
-          <Flex hAlignContent="center">
+          <Flex hAlignContent="center" paddingTop='space50'>
             <Stack orientation="vertical" spacing="space50">
               <Box width={238}>
                 <Button fullWidth variant="primary">
@@ -87,10 +87,6 @@ const RightPane = () => {
     return <></>;
   }, [product]);
 
-  return (
-    <Flex grow hAlignContent="center" height="100%" width="50%">
-      <Box>{productView}</Box>
-    </Flex>
-  );
+  return <Box>{productView}</Box>;
 };
 export default RightPane;

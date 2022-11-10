@@ -18,8 +18,18 @@ const HomeView = () => {
         </Box>
       </Flex>
       <Flex grow>
+        <Flex
+          grow
+          vAlignContent="center"
+          hAlignContent="center"
+          height="100%"
+        >
+          <Stack orientation='horizontal' spacing="space200">
           <LeftPane />
           <RightPane />
+          </Stack>
+
+        </Flex>
       </Flex>
       <Flex>
         <Box width="100%">

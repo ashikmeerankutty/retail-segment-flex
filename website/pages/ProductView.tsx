@@ -18,8 +18,10 @@ const ProductView = () => {
         </Box>
       </Flex>
       <Flex grow paddingTop='space60'>
+      <Flex grow hAlignContent="center" height="100%">
         <LeftPane />
         <RightPane />
+        </Flex>
       </Flex>
       <Flex>
         <Box width="100%">

@@ -65,14 +65,9 @@ const LeftPane = () => {
   }, [data, router]);
 
   return (
-    <Flex
-      grow
-      hAlignContent="center"
-      height="100%"
-      width="50%"
-    >
-      <Box width={700}>{products}</Box>
-    </Flex>
+    <Box width={700} marginRight="space100">
+      {products}
+    </Box>
   );
 };
 export default LeftPane;

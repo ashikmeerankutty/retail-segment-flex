@@ -2,8 +2,7 @@ import { Box, Button, Flex, Stack, Text } from "@twilio-paste/core";
 
 const LeftPane = () => {
   return (
-    <Flex grow vAlignContent="center" hAlignContent="center" height="100%" width="50%">
-      <Box width={300} style={{ textAlign: "center" }}>
+      <Box width={300} style={{ textAlign: "center" }} marginRight='space200'>
         <Stack orientation="vertical" spacing="space150">
           <Text fontSize="fontSize90" as="h1">
             Owl Shoes
@@ -28,7 +27,6 @@ const LeftPane = () => {
           </Button>
         </Stack>
       </Box>
-    </Flex>
   );
 };
 export default LeftPane;
