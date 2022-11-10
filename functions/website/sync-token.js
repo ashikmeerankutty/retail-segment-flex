@@ -1,11 +1,10 @@
 const { getParam } = require(Runtime.getFunctions()["helpers"].path);
-const fs = require('fs')
 const { AuthedHandler } = require(Runtime.getFunctions()[
   "authentication-helper"
 ].path);
-const THIS = "/app/segment:";
+const THIS = "/app/sync-token:";
 
-/** Gets Segment API Key for client. Does not require authentication for hls-segment-flex-provider. */
+/** Issues Sync token upon receipt of a different auth token. */
 exports.handler = async (context, event, callback) => {
   const response = new Twilio.Response();
   response.appendHeader("Access-Control-Allow-Origin", "*");
@@ -21,22 +20,30 @@ exports.handler = async (context, event, callback) => {
       return callback(null, response);
     }
 
-    const images = event.names.map((name => {
-        const fileLoc = Object.keys(Runtime.getAssets()).find((key) =>
-        key.includes(name)
-      );
-      const path = Runtime.getAssets()[fileLoc].path;
-  
-      const bitmap = fs.readFileSync(path)
-      return {
-        name,
-        b64:new Buffer(bitmap).toString('base64')
-      }
-    }))
+    const AccessToken = require("twilio").jwt.AccessToken;
+    const SyncGrant = AccessToken.SyncGrant;
+
+    const identity = "Unknown"; //TODO: Update this
+
+    var syncGrant = new SyncGrant({
+      serviceSid: await getParam(context, "SYNC_SID"),
+    });
+
+    var token = new AccessToken(
+      context.ACCOUNT_SID,
+      await getParam(context, "API_KEY"),
+      await getParam(context, "API_SECRET")
+    );
+
+    token.addGrant(syncGrant);
+    token.identity = identity;
 
     response.setBody({
       error: false,
-      result: images,
+      result: {
+        identity,
+        token: token.toJwt(),
+      },
     });
 
     return callback(null, response);
@@ -51,7 +58,7 @@ exports.handler = async (context, event, callback) => {
 };
 
 const validate = (event) => {
-  if (!event.names) {
+  if (!event.token) {
     return false;
   }
   return true;

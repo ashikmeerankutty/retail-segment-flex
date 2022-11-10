@@ -14,10 +14,10 @@ const LeftPane = () => {
             as="h2"
             style={{ fontFamily: "impact", fontSize: 60, lineHeight: "73px" }}
           >
-            OWL RUNNING KIT 2023
+            OWL RUNNERS 2023
           </Text>
           <Text fontSize="fontSize60" as="p" style={{ fontWeight: "300" }}>
-            Members get a sneak peek at our newest lineup starting now. Hurry
+            Members get a sneak peek at our newest shoe starting now. Hurry
             before they sell out!
           </Text>
           <Button variant="secondary">
