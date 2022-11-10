@@ -1,8 +1,17 @@
+import { Box, Grid } from '@twilio-paste/core';
 import React from 'react'
 
-const CheckoutSummary = () => {
+export interface CheckoutSummaryProps {
+  handlePlaceOrder: () => void;
+}
+
+const CheckoutSummary = ({handlePlaceOrder}: CheckoutSummaryProps) => {
   return (
-    <div>CheckoutSummary</div>
+    <Box>
+      <Grid>
+        
+      </Grid>
+    </Box>
   )
 }
 
