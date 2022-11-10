@@ -7,6 +7,7 @@ const devConfig = {
   swcMinify: true,
   images: {
     domains: ["localhost"],
+    unoptimized: true
   },
 };
 
@@ -14,6 +15,9 @@ const devConfig = {
 const prodConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    unoptimized: true
+  }
 };
 
 module.exports = (phase) =>

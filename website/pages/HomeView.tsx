@@ -1,4 +1,4 @@
-import { Box, Flex } from "@twilio-paste/core";
+import { Box, Flex, Stack } from "@twilio-paste/core";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LeftPane from "../HomeView/LeftPane";
@@ -18,8 +18,8 @@ const HomeView = () => {
         </Box>
       </Flex>
       <Flex grow>
-        <LeftPane />
-        <RightPane />
+          <LeftPane />
+          <RightPane />
       </Flex>
       <Flex>
         <Box width="100%">
