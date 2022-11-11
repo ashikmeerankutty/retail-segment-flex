@@ -2,11 +2,11 @@ import { Box, Flex, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { getProducts } from "../redux/actions";
-import { productsSelector } from "../redux/selectors";
-import { useAppDispatch } from "../redux/store";
-import { IProduct } from "../Global.types";
-import { getBaseUrl } from "../util";
+import { getProducts } from "../../redux/actions";
+import { productsSelector } from "../../redux/selectors";
+import { useAppDispatch } from "../../redux/store";
+import { IProduct } from "../../Global.types";
+import { getBaseUrl } from "../../util";
 import { useRouter } from "next/router";
 
 const RightPane = () => {
