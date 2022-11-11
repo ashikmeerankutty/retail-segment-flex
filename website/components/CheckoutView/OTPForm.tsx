@@ -21,7 +21,7 @@ const OTPForm = ({handleSignIn}:OTPFormProps) => {
 
 
   return (
-    <Box className="otp-form" marginTop={"space200"}>
+    <Box className="otp-form" marginTop={"space100"}>
         <Grid>
           <Column span={3}>
             <Flex grow />
@@ -64,7 +64,6 @@ const OTPForm = ({handleSignIn}:OTPFormProps) => {
                       onChange={() => {
                         console.log("Hello");
                       }}
-                      aria-describedby="message_help_text"
                       id="message"
                       name="message"
                       required
