@@ -35,39 +35,45 @@ const RightPane = () => {
   ]);
 
   const products = useMemo(() => {
-    if (data.length > 0) {
-      return data.map((product: IProduct) => (
-        <Box
-          onClick={() =>
-            router.push({
-              pathname: "/ProductView",
-              query: { productId: product.id },
-            })
-          }
-          key={product.id}
-          style={{
-            display: "inline-block",
-            cursor: "pointer",
-            paddingRight: 50,
-            paddingBottom: 50,
-          }}
-        >
-          <Stack orientation="vertical" spacing="space0">
-            <Image
-              src={`${getBaseUrl()}/images/products/${product.imagePaths[0]}`}
-              width={248}
-              height={248}
-              alt={`image-${product.id}`}
-            />
-            <Text as="p" fontWeight="fontWeightBold" paddingLeft="space30">
-              {product.title}
-            </Text>
-            <Text as="p" color="colorTextWeaker" paddingLeft="space30">
-              {product.subTitle}
-            </Text>
-          </Stack>
-        </Box>
-      ));
+    if (data && data.length > 0) {
+      return data.map((product: IProduct) => {
+        if (product) {
+          return (
+            <Box
+              onClick={() =>
+                router.push({
+                  pathname: "/ProductView",
+                  query: { productId: product.id },
+                })
+              }
+              key={product.id}
+              style={{
+                display: "inline-block",
+                cursor: "pointer",
+                paddingRight: 50,
+                paddingBottom: 50,
+              }}
+            >
+              <Stack orientation="vertical" spacing="space0">
+                <Image
+                  src={`${getBaseUrl()}/images/products/${
+                    product.imagePaths[0]
+                  }`}
+                  width={248}
+                  height={248}
+                  alt={`image-${product.id}`}
+                />
+                <Text as="p" fontWeight="fontWeightBold" paddingLeft="space30">
+                  {product.title}
+                </Text>
+                <Text as="p" color="colorTextWeaker" paddingLeft="space30">
+                  {product.subTitle}
+                </Text>
+              </Stack>
+            </Box>
+          );
+        }
+      });
     }
     return <></>;
   }, [data, router]);

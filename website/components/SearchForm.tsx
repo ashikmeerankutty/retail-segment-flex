@@ -6,7 +6,6 @@ const SearchForm = () => {
   return (
     <>
       <Input
-        aria-describedby="search_text"
         id={`navbar-input`}
         name="search"
         type="search"

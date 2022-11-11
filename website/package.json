@@ -8,6 +8,7 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
+    "build-export": "npm run build && npm run export && mv out/* ../assets/website/",
     "prepare": "husky install"
   },
   "dependencies": {

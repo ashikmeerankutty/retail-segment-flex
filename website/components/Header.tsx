@@ -20,7 +20,11 @@ import { useAppDispatch } from "../redux/store";
 import { getSyncToken } from "../redux/actions";
 import { SyncClient } from "twilio-sync";
 
-const Header = () => {
+export interface HeaderProps {
+  showNavOnly?: boolean;
+}
+
+const Header = ({showNavOnly = false}: HeaderProps) => {
   const [syncClient, setSyncClient] = useState<SyncClient>();
   const [cartItems, setCartItems] = useState<number>(0);
   const {
@@ -80,6 +84,7 @@ const Header = () => {
             </Stack>
           </div>
         </Box>
+        {!showNavOnly ?
         <Box paddingRight="space100" paddingLeft="space100">
           <Grid>
             <Column offset={3} span={6}>
@@ -121,6 +126,7 @@ const Header = () => {
             </Column>
           </Grid>
         </Box>
+      : <></>}
       </Stack>
     </Box>
   );
