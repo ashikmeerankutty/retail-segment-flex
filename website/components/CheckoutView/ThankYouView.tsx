@@ -1,17 +1,20 @@
 import { Box, Flex, Stack, Text } from "@twilio-paste/core";
 import React from "react";
+import { IProduct } from "../../Global.types";
 import OrderedItem from "./OrderedItem";
 
 export interface ThankYouViewProps {
   orderDate?: string;
   orderNumber?: string;
   customerEmail?: string;
+  orderedItems: IProduct[];
 }
 
 const ThankYouView = ({
   orderDate = "October 25, 2022, 1:43 PM EST",
   orderNumber = "C00143680700",
   customerEmail = "Mary.Doe@gmail.com",
+  orderedItems,
 }: ThankYouViewProps) => {
   return (
     <Box paddingX={"space200"} height={"auto"} className="thankyou-box">
@@ -64,13 +67,17 @@ const ThankYouView = ({
           </Box>
           <Box width={"100%"}>
             <Flex wrap>
-              <OrderedItem />
-              <OrderedItem
-                name={"Orange Joggers"}
-                category={"Women's Joggers"}
-                size={"Medium"}
-                imageUrl={"/images/products/product3_0.png"}
-              />
+              {orderedItems.map((item, idx) => {
+                return (
+                  <OrderedItem
+                    key={idx}
+                    name={item.title}
+                    category={item.subTitle}
+                    size={item.availbleSizes[0].size}
+                    imageUrl={item.imagePaths[0]}
+                  />
+                );
+              })}
             </Flex>
           </Box>
         </Box>

@@ -1,53 +1,58 @@
-import { Box, Stack, Text } from '@twilio-paste/core';
+import { Box, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
-import React from 'react'
-import { getBaseUrl } from '../../util';
+import React from "react";
+import { IProduct } from "../../Global.types";
+import { getBaseUrl } from "../../util";
 
 export interface ItemsSummaryProps {
   arrivalDate: string;
+  orderedItems: IProduct[];
 }
 
-const ItemsSummary = ({arrivalDate}: ItemsSummaryProps) => {
+const ItemsSummary = ({ arrivalDate, orderedItems }: ItemsSummaryProps) => {
   return (
     <Box>
       <Stack orientation={"vertical"} spacing={"space70"}>
-        <Text as={"div"} fontWeight={"fontWeightSemibold"}>Arriving by {arrivalDate}</Text>
+        <Text as={"div"} fontWeight={"fontWeightSemibold"}>
+          Arriving by {arrivalDate}
+        </Text>
         <Stack orientation="vertical" spacing="space80">
-          <Box display={"flex"}>
-            <Box marginRight={"space60"}>
-              <Image
-                src={`${getBaseUrl()}/images/products/product1_1.png`}
-                width={100}
-                height={100}
-                alt={`image-product1_1.png`}
-              />
-            </Box>
-            <Stack orientation={"vertical"} spacing={'space30'} >
-              <Text as={'p'} fontWeight={"fontWeightSemibold"} fontSize={"fontSize20"}>Owl Shoes Flynit 2023</Text>
-              <Text as={'p'} fontSize={"fontSize20"}>Women&apos;s Running Shoes</Text>
-              <Text as={'p'} fontSize={"fontSize20"}>Size 7</Text>
-            </Stack>
-          </Box>
-          <Box display={"flex"}>
-            <Box marginRight={"space60"}>
-              <Image
-                src={`${getBaseUrl()}/images/products/product3_0.png`}
-                width={100}
-                height={100}
-                alt={`image-product3_0.png`}
-              />
-            </Box>
-            <Stack orientation={"vertical"} spacing={'space30'}>
-              <Text as={'p'} fontSize={"fontSize20"} fontWeight={"fontWeightSemibold"}>Winter Sports Beanie</Text>
-              <Text as={'p'} fontSize={"fontSize20"}>Beanie</Text>
-              <Text as={'p'} fontSize={"fontSize20"}>One Size</Text>
-            </Stack>
-          </Box>
-          
+          {orderedItems.map((item, index) => {
+            return (
+              <Box display={"flex"} key={index}>
+                <Box marginRight={"space60"}>
+                  <Image
+                    src={`${getBaseUrl()}/images/products/${
+                      item.imagePaths[0]
+                    }`}
+                    width={100}
+                    height={100}
+                    alt={item.imagePaths[0]}
+                  />
+                </Box>
+                <Stack orientation={"vertical"} spacing={"space30"}>
+                  <Text
+                    as={"p"}
+                    fontWeight={"fontWeightSemibold"}
+                    fontSize={"fontSize20"}
+                  >
+                    {item.title}
+                  </Text>
+                  <Text as={"p"} fontSize={"fontSize20"}>
+                    {item.subTitle}
+                  </Text>
+                  <Text as={"p"} fontSize={"fontSize20"}>
+                    {/* NEED TO CHANGE THIS TO SELECTED SIZE */}
+                    Size {item.availbleSizes[0].size}
+                  </Text>
+                </Stack>
+              </Box>
+            );
+          })}
         </Stack>
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
 export default ItemsSummary;
