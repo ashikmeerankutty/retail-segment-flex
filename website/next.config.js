@@ -2,22 +2,35 @@
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
 /** @type {import('next').NextConfig} */
-const devConfig = {
+const baseConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/HomeView",
+        permanent: true,
+      },
+    ];
+  },
+};
+
+/** @type {import('next').NextConfig} */
+const devConfig = {
+  ...baseConfig,
   images: {
     domains: ["localhost"],
-    unoptimized: true
+    unoptimized: true,
   },
 };
 
 /** @type {import('next').NextConfig} */
 const prodConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+  ...baseConfig,
   images: {
-    unoptimized: true
-  }
+    unoptimized: true,
+  },
 };
 
 module.exports = (phase) =>

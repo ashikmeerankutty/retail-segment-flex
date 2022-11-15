@@ -1,18 +1,40 @@
 import { Box, Flex, Text } from "@twilio-paste/core";
+import { useMemo } from "react";
+import { BackgroundColor, TextColor } from "@twilio-paste/core/style-props";
 
 export interface ISizeButtonProps {
-  value: string;
   disabled?: boolean;
+  onClick: (size: string) => void;
+  selected?: boolean;
+  value: string;
 }
 
-const SizeButton = ({ disabled, value }: ISizeButtonProps) => {
+const SizeButton = ({ disabled, onClick, value, selected }: ISizeButtonProps) => {
+  const bgColor = useMemo<BackgroundColor | undefined>(() => {
+    if (disabled) return "colorBackground";
+
+    if (selected) return "colorBackgroundPrimary";
+
+    return undefined;
+  }, [disabled, selected]);
+
+  const textColor = useMemo<TextColor | undefined>(() => {
+    if (disabled) return "colorTextWeaker";
+
+    if (selected) return "colorTextWeakest";
+
+    return undefined;
+  }, [disabled, selected]);
+
   return (
     <Box
       borderWidth="borderWidth10"
       borderStyle="solid"
       borderColor={"colorBorder"}
       borderRadius="borderRadius20"
-      backgroundColor={disabled ? "colorBackground" : undefined}
+      backgroundColor={bgColor}
+      _hover={{ cursor: "pointer" }}
+      onClick={()=>onClick(value)}
     >
       <Flex
         vAlignContent="center"
@@ -23,7 +45,7 @@ const SizeButton = ({ disabled, value }: ISizeButtonProps) => {
         <Text
           as="p"
           fontWeight="fontWeightBold"
-          color={disabled ? "colorTextWeaker" : undefined}
+          color={textColor}
         >
           {value}
         </Text>

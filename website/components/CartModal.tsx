@@ -6,13 +6,18 @@ import { getBaseUrl } from "../util";
 import { CloseIcon } from "@twilio-paste/icons/cjs/CloseIcon";
 import { MouseEventHandler } from "react";
 
+export interface IProductSelectionArgs {
+    color?:string
+    size?:string
+}
 export interface ICartModalProps {
   numberOfItems?: number;
   onClose: MouseEventHandler<HTMLElement>;
   product: IProduct;
+  productArgs: IProductSelectionArgs
 }
 
-const CartModal = ({ numberOfItems, onClose, product }: ICartModalProps) => {
+const CartModal = ({ numberOfItems, onClose, product, productArgs }: ICartModalProps) => {
   return product ? (
     <Box width="500px" height="400px">
       <Flex vertical height="100%" width="100%">
@@ -71,7 +76,7 @@ const CartModal = ({ numberOfItems, onClose, product }: ICartModalProps) => {
                 {product.title}
               </Text>
               <Text as="p">{product.subTitle}</Text>
-              <Text as="p">Size 7 {/** TODO: Update this */}</Text>
+              <Text as="p">Size {productArgs.size}</Text>
               <Text as="p">${product.price}</Text>
             </Stack>
           </Stack>
