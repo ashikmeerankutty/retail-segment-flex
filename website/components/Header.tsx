@@ -16,7 +16,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSyncClient from "../hooks/useSyncClient";
 
-const Header = () => {
+export interface HeaderProps {
+  showNavOnly?: boolean;
+}
+
+const Header = ({showNavOnly = false}: HeaderProps) => {
   const syncClient = useSyncClient();
   const [cartItems, setCartItems] = useState<number>(0);
 
@@ -60,6 +64,7 @@ const Header = () => {
             </Stack>
           </div>
         </Box>
+        {!showNavOnly ?
         <Box paddingRight="space100" paddingLeft="space100">
           <Grid>
             <Column offset={3} span={6}>
@@ -101,6 +106,7 @@ const Header = () => {
             </Column>
           </Grid>
         </Box>
+      : <></>}
       </Stack>
     </Box>
   );

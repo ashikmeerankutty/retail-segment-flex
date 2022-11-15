@@ -1,8 +1,8 @@
 import { Box, Flex, Stack } from "@twilio-paste/core";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import LeftPane from "../HomeView/LeftPane";
-import RightPane from "../HomeView/RightPane";
+import LeftPane from "../components/HomeView/LeftPane";
+import RightPane from "../components/HomeView/RightPane";
 import useSegment from "../hooks/useSegment";
 import useWebchat from "../hooks/useWebchat";
 import LoadingIcons from "react-loading-icons";
