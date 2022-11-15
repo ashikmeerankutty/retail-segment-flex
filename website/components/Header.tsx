@@ -13,43 +13,23 @@ import {
 import { StarIcon } from "@twilio-paste/icons/cjs/StarIcon";
 import SearchForm from "./SearchForm";
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { syncTokenSelector } from "../redux/selectors";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../redux/store";
-import { getSyncToken } from "../redux/actions";
-import { SyncClient } from "twilio-sync";
+import useSyncClient from "../hooks/useSyncClient";
 
 const Header = () => {
-  const [syncClient, setSyncClient] = useState<SyncClient>();
+  const syncClient = useSyncClient();
   const [cartItems, setCartItems] = useState<number>(0);
-  const {
-    fetching,
-    fetchingFailure,
-    fetchingSuccess,
-    data: tokenData,
-  } = useSelector(syncTokenSelector);
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!fetching && !fetchingFailure && !fetchingSuccess) {
-      dispatch(getSyncToken());
-    }
-  }, [dispatch, fetching, fetchingFailure, fetchingSuccess]);
-
-  useEffect(() => {
-    if (!!tokenData.token) {
-      const client = new SyncClient(tokenData.token, { logLevel: "debug" });
-      setSyncClient(client);
-      client.map("Cart").then((map) => {
+    if (syncClient) {
+      syncClient.map("Cart").then((map) => {
         map.on("itemAdded", (args) => {
           setCartItems((state) => state + 1);
           //console.log('args.item.data:', args.item.data);
         });
       });
     }
-  }, [tokenData.token]);
+  }, [syncClient]);
 
   return (
     <Box>

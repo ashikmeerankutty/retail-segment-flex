@@ -8,6 +8,7 @@ import { useAppDispatch } from "../redux/store";
 import { IProduct } from "../Global.types";
 import { getBaseUrl } from "../util";
 import { useRouter } from "next/router";
+import useProducts from "../hooks/useProducts";
 
 const RightPane = () => {
   const {
@@ -16,23 +17,7 @@ const RightPane = () => {
     fetchingFailure: fetchingProductsFailure,
     fetchingSuccess: fetchingProductsSuccess,
   } = useSelector(productsSelector);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (
-      !fetchingProducts &&
-      !fetchingProductsFailure &&
-      !fetchingProductsSuccess
-    ) {
-      dispatch(getProducts());
-    }
-  }, [
-    dispatch,
-    fetchingProducts,
-    fetchingProductsFailure,
-    fetchingProductsSuccess,
-  ]);
+  const router = useRouter()
 
   const products = useMemo(() => {
     if (data.length > 0) {

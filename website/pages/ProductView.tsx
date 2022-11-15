@@ -14,6 +14,8 @@ import { useAppDispatch } from "../redux/store";
 import { useRouter } from "next/router";
 import { getProducts } from "../redux/actions";
 import { IProduct } from "../Global.types";
+import useSyncClient from "../hooks/useSyncClient";
+import LoadingIcons from "react-loading-icons";
 
 const customStyles = {
   content: {
@@ -26,13 +28,14 @@ const customStyles = {
   },
   overlay: {
     zIndex: 2, //without this, the cart badge will show thru the modal.
-    backgroundColor: 'rgb(0,0,0,0.75)'
-  }
+    backgroundColor: "rgb(0,0,0,0.75)",
+  },
 };
 
 const ProductView = () => {
   useSegment();
   useWebchat();
+  const syncClient = useSyncClient();
 
   const {
     data,
@@ -42,6 +45,7 @@ const ProductView = () => {
   } = useSelector(productsSelector);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [selectedSize, setSelectedSize] = useState<string>();
 
   useEffect(() => {
     if (
@@ -80,7 +84,14 @@ const ProductView = () => {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", zIndex: 3 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        zIndex: 3,
+      }}
+    >
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -88,7 +99,11 @@ const ProductView = () => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <CartModal onClose={(e) => setIsOpen(false)} product={product} />
+        <CartModal
+          onClose={(e) => setIsOpen(false)}
+          product={product}
+          productArgs={{ size: selectedSize ?? "Unknown" }}
+        />
       </Modal>
       <Flex>
         <Box width="100%">
@@ -96,9 +111,36 @@ const ProductView = () => {
         </Box>
       </Flex>
       <Flex grow paddingTop="space60">
-        <Flex grow hAlignContent="center" height="100%">
-          <LeftPane product={product} />
-          <RightPane onCheckout={() => setIsOpen(true)} product={product} />
+        <Flex
+          grow
+          hAlignContent="center"
+          height="100%"
+          vAlignContent={fetchingProductsSuccess ? undefined : "center"}
+        >
+          {fetchingProductsSuccess ? (
+            <>
+              <LeftPane product={product} />
+              <RightPane
+                onCheckout={(size) => {
+                  setIsOpen(true);
+                  setSelectedSize(size);
+                  syncClient?.map("Cart").then((map) => {
+                    const d = Date.now();
+                    map.set(`item-${d}`, { product, size }, { ttl: 7200 }); //2 hours
+                  });
+                }}
+                product={product}
+              />
+            </>
+          ) : (
+            <Box>
+              <LoadingIcons.Puff
+                stroke="#0263E0"
+                strokeOpacity={0.125}
+                speed={0.75}
+              />
+            </Box>
+          )}
         </Flex>
       </Flex>
       <Flex>

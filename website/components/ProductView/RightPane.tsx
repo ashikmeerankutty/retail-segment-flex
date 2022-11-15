@@ -1,16 +1,17 @@
 import { Box, Button, Flex, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { IProduct } from "../../Global.types";
 import { getBaseUrl } from "../../util";
 import SizeGrid from "../SizeSelection/SizeGrid";
 
 export interface IProductRightPaneProps {
-  onCheckout: () => void;
+  onCheckout: (size:string|undefined) => void;
   product: IProduct;
 }
 
 const RightPane = ({ onCheckout, product }: IProductRightPaneProps) => {
+  const [selectedSize, setSelectedSize] = useState<string>();
   const productView = useMemo(() => {
     if (product) {
       return (
@@ -31,12 +32,15 @@ const RightPane = ({ onCheckout, product }: IProductRightPaneProps) => {
             alt="color selection"
           />
 
-          <SizeGrid sizes={product.availbleSizes} />
+          <SizeGrid
+            onSizeSelect={(size) => setSelectedSize(size)}
+            sizes={product.availbleSizes}
+          />
 
           <Flex hAlignContent="center" paddingTop="space50">
             <Stack orientation="vertical" spacing="space50">
               <Box width={238}>
-                <Button fullWidth variant="primary" onClick={onCheckout}>
+                <Button fullWidth variant="primary" onClick={()=>onCheckout(selectedSize)} disabled={!selectedSize}>
                   Add to cart
                 </Button>
               </Box>
@@ -51,7 +55,7 @@ const RightPane = ({ onCheckout, product }: IProductRightPaneProps) => {
       );
     }
     return <></>;
-  }, [onCheckout, product]);
+  }, [onCheckout, product, selectedSize]);
 
   return <Box>{productView}</Box>;
 };
