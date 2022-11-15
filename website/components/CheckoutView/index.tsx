@@ -38,7 +38,7 @@ const CheckoutContent = ({setShowNavOnly}: CheckoutContentProps) => {
   }
 
   return (
-    <Box marginTop={"space80"} height={"60vh"} width={"100%"} className="checkout-content">
+    <Box marginTop={"space80"} height={"100%"} width={"100%"} className="checkout-content">
       {showOtp ? <OTPForm handleSignIn={handleSignIn}/> : <></>}
       {showSummary ? <CheckoutSummary handlePlaceOrder={handlePlaceOrder}/> : <></>}
       {showThankYou ? <ThankYouView/> : <></>}

@@ -43,7 +43,7 @@ const PriceSummary = ({
       <Box display={"flex"} width={"100%"} marginBottom={"space40"}>
         <Box width={"50%"}>Estimated Tax</Box>
         <Box display={"flex"} justifyContent={"flex-end"} width={"50%"}>
-          <Text as={"span"}>{tax ? `$${tax}` : "-"}</Text>
+          <Text as={"span"}>{tax ? `$${tax.toFixed(2)}` : "-"}</Text>
         </Box>
       </Box>
       <Box

@@ -18,7 +18,7 @@ export interface CheckoutSummaryProps {
 
 const CheckoutSummary = ({ handlePlaceOrder }: CheckoutSummaryProps) => {
   return (
-    <Box marginX={"space200"}>
+    <Box marginX={"space200"} marginBottom={"space80"}>
       <Grid>
         <Column span={7}>
           <Box paddingRight={"space200"}>
