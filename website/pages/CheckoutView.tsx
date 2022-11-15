@@ -10,8 +10,7 @@ const CheckoutView = () => {
   useSegment();
   useWebchat();
 
-  const [showNavOnly, setShowNavOnly] = useState<boolean>(true)
-
+  const [showNavOnly, setShowNavOnly] = useState<boolean>(false)
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <Flex>
