@@ -18,10 +18,8 @@ export interface OTPFormProps {
 }
 
 const OTPForm = ({handleSignIn}:OTPFormProps) => {
-
-
   return (
-    <Box className="otp-form" marginTop={"space100"}>
+    <Box className="otp-form" marginTop={"space100"} marginBottom={"space100"}>
         <Grid>
           <Column span={3}>
             <Flex grow />
