@@ -1,12 +1,12 @@
 import { Box, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
 import React from "react";
-import { IProduct } from "../../Global.types";
+import { CartProduct, IProduct } from "../../Global.types";
 import { getBaseUrl } from "../../util";
 
 export interface ItemsSummaryProps {
   arrivalDate: string;
-  orderedItems: IProduct[];
+  orderedItems: CartProduct[];
 }
 
 const ItemsSummary = ({ arrivalDate, orderedItems }: ItemsSummaryProps) => {
@@ -23,11 +23,11 @@ const ItemsSummary = ({ arrivalDate, orderedItems }: ItemsSummaryProps) => {
                 <Box marginRight={"space60"}>
                   <Image
                     src={`${getBaseUrl()}/images/products/${
-                      item.imagePaths[0]
+                      item.product.imagePaths[0]
                     }`}
                     width={100}
                     height={100}
-                    alt={item.imagePaths[0]}
+                    alt={item.product.imagePaths[0]}
                   />
                 </Box>
                 <Stack orientation={"vertical"} spacing={"space30"}>
@@ -36,14 +36,14 @@ const ItemsSummary = ({ arrivalDate, orderedItems }: ItemsSummaryProps) => {
                     fontWeight={"fontWeightSemibold"}
                     fontSize={"fontSize20"}
                   >
-                    {item.title}
+                    {item.product.title}
                   </Text>
                   <Text as={"p"} fontSize={"fontSize20"}>
-                    {item.subTitle}
+                    {item.product.subTitle}
                   </Text>
                   <Text as={"p"} fontSize={"fontSize20"}>
                     {/* NEED TO CHANGE THIS TO SELECTED SIZE */}
-                    Size {item.availbleSizes[0].size}
+                    Size {item.size}
                   </Text>
                 </Stack>
               </Box>

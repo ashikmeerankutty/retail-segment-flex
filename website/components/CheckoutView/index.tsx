@@ -1,8 +1,8 @@
 import { Box } from "@twilio-paste/core";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Paginator, SyncMapItem } from "twilio-sync";
-import { IProduct } from "../../Global.types";
-import useSyncClient from "../../hooks/useSyncClient";
+import { SyncMapItem } from "twilio-sync";
+import { CartProduct } from "../../Global.types";
+import { getBaseUrl } from "../../util";
 import CheckoutSummary from "./CheckoutSummary";
 import OTPForm from "./OTPForm";
 import ThankYouView from "./ThankYouView";
@@ -15,30 +15,24 @@ const CheckoutContent = ({ setShowNavOnly }: CheckoutContentProps) => {
   const [showOtp, setShowOtp] = useState<boolean>(true);
   const [showSummary, setShowSummary] = useState<boolean>(false);
   const [showThankYou, setShowThankYou] = useState<boolean>(false);
-  const [orderedItems, setOrderedItems] = useState<IProduct[]>([]);
-  const syncClient = useSyncClient();
+  const [orderedItems, setOrderedItems] = useState<CartProduct[]>([]);
 
   useEffect(() => {
-    try {
-      const pageHandler = async (paginator: Paginator<SyncMapItem>): Promise<IProduct> => {
-        paginator.items.forEach((item: SyncMapItem) => {
-          console.log(`SyncMapItem ${item.key}: `, item.data);
-          setOrderedItems(old => [...old, item.data as IProduct]);
-        });
-        return await paginator.nextPage().then(pageHandler)
-      };
-      if (syncClient) {
-        syncClient.map("Cart").then(async (map) => {
-          const mapItems = await map.getItems().then(pageHandler).catch((error) => {
-            console.log("Error: ", error);
-          });
-          console.log("item", mapItems);
-        });
-      }
-    } catch (err) {
-      console.log("No more sync items found: ", err)
+    const getCartItems = async () => {
+      const data = await fetch(getBaseUrl() + "/website/cart");
+      const itemsJson = await data.json();
+      console.log(itemsJson, "rsult baby");
+      const products = itemsJson.result.map((mapItem: SyncMapItem) => mapItem.data);
+      console.log(products[0], "products");
+      setOrderedItems(products);
     }
-  }, [syncClient]);
+
+    try {
+      getCartItems();
+    } catch (err) {
+      console.log("No more sync items found: ", err);
+    }
+  }, []);
 
   const handleSignIn = () => {
     setShowOtp((old) => !old);
@@ -60,11 +54,14 @@ const CheckoutContent = ({ setShowNavOnly }: CheckoutContentProps) => {
     >
       {showOtp ? <OTPForm handleSignIn={handleSignIn} /> : <></>}
       {showSummary ? (
-        <CheckoutSummary handlePlaceOrder={handlePlaceOrder} orderedItems={orderedItems}/>
+        <CheckoutSummary
+          handlePlaceOrder={handlePlaceOrder}
+          orderedItems={orderedItems}
+        />
       ) : (
         <></>
       )}
-      {showThankYou ? <ThankYouView orderedItems={orderedItems}/> : <></>}
+      {showThankYou ? <ThankYouView orderedItems={orderedItems} /> : <></>}
     </Box>
   );
 };

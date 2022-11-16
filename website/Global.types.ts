@@ -21,6 +21,11 @@
         availbleSizes: IAvailbleSize[];
     }
 
+    export type CartProduct = {
+        product: IProduct;
+        size: number;
+    }
+
     export interface IServerImageMetadata {
         name: string
         b64: string

@@ -1,13 +1,13 @@
 import { Box, Flex, Stack, Text } from "@twilio-paste/core";
 import React from "react";
-import { IProduct } from "../../Global.types";
+import { CartProduct } from "../../Global.types";
 import OrderedItem from "./OrderedItem";
 
 export interface ThankYouViewProps {
   orderDate?: string;
   orderNumber?: string;
   customerEmail?: string;
-  orderedItems: IProduct[];
+  orderedItems: CartProduct[];
 }
 
 const ThankYouView = ({
@@ -68,13 +68,14 @@ const ThankYouView = ({
           <Box width={"100%"}>
             <Flex wrap>
               {orderedItems.map((item, idx) => {
+                console.log(item, "MY ITEMS")
                 return (
                   <OrderedItem
                     key={idx}
-                    name={item.title}
-                    category={item.subTitle}
-                    size={item.availbleSizes[0].size}
-                    imageUrl={item.imagePaths[0]}
+                    name={item.product.title}
+                    category={item.product.subTitle}
+                    size={item.size}
+                    imageUrl={item.product.imagePaths[0]}
                   />
                 );
               })}
