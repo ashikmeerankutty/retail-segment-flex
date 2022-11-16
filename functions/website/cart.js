@@ -35,12 +35,13 @@ exports.handler = async (context, event, callback) => {
           .services(syncSid)
           .syncMaps(map.sid)
           .syncMapItems.list()
-          .then((resp) =>
-            resp
+          .then((resp) => {
+            return resp
               .filter(
-                (item) => new Date(item.dateExpires).getTime() < Date.now()
+                (item) => new Date(item.dateExpires).getTime() > Date.now()
               )
               .filter((item) => item.data)
+            }
           );
       })
       .catch((err) => {

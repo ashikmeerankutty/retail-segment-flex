@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, Text } from "@twilio-paste/core";
+import { Box, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";

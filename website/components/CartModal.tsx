@@ -5,6 +5,7 @@ import { IProduct } from "../Global.types";
 import { getBaseUrl } from "../util";
 import { CloseIcon } from "@twilio-paste/icons/cjs/CloseIcon";
 import { MouseEventHandler } from "react";
+import { useRouter } from 'next/router'
 
 export interface IProductSelectionArgs {
     color?:string
@@ -18,6 +19,12 @@ export interface ICartModalProps {
 }
 
 const CartModal = ({ numberOfItems, onClose, product, productArgs }: ICartModalProps) => {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    router.push('/CheckoutView');
+  }
+
   return product ? (
     <Box width="500px" height="400px">
       <Flex vertical height="100%" width="100%">
@@ -87,7 +94,7 @@ const CartModal = ({ numberOfItems, onClose, product, productArgs }: ICartModalP
               </Button>
             </Flex>
             <Flex grow paddingLeft="space50">
-              <Button fullWidth variant="primary">
+              <Button fullWidth variant="primary" onClick={handleCheckout}>
                 Checkout
               </Button>
             </Flex>

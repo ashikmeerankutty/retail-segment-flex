@@ -9,14 +9,14 @@ import {
 } from "@twilio-paste/core";
 import React from "react";
 import LoadingIcons from "react-loading-icons";
-import { IProduct } from "../../Global.types";
+import { CartProduct } from "../../Global.types";
 import CheckoutHeader from "./CheckoutHeader";
 import ItemsSummary from "./ItemsSummary";
 import PriceSummary from "./PriceSummary";
 
 export interface CheckoutSummaryProps {
   handlePlaceOrder: () => void;
-  orderedItems: IProduct[];
+  orderedItems: CartProduct[];
 }
 
 const CheckoutSummary = ({
@@ -26,7 +26,7 @@ const CheckoutSummary = ({
   const getSubTotal = () => {
     let total = 0;
     console.log("ordered", orderedItems);
-    orderedItems.forEach((item) => (total += Number(item.price)));
+    orderedItems.forEach((item) => (total += Number(item.product.price)));
     return total;
   };
 
