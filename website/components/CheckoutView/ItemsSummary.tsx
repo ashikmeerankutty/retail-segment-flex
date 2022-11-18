@@ -1,7 +1,7 @@
 import { Box, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
 import React from "react";
-import { CartProduct, IProduct } from "../../Global.types";
+import { CartProduct } from "../../Global.types";
 import { getBaseUrl } from "../../util";
 
 export interface ItemsSummaryProps {
