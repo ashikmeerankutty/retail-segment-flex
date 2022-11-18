@@ -173,3 +173,5 @@ dist
 # webchat files used for development
 assets/main.js
 assets/main.js.map
+
+test.js
