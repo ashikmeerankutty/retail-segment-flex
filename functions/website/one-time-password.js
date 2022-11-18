@@ -2,14 +2,14 @@ const { getParam } = require(Runtime.getFunctions()["helpers"].path);
 const THIS = "/website/one-time-password";
 
 /**
- * 
- * @param {*} context 
+ *
+ * @param {*} context
  * @param {*} event => {
  *   action: "verify" | "check",
  *   code?: string
  * }
- * @param {*} callback 
- * @returns 
+ * @param {*} callback
+ * @returns
  */
 exports.handler = async (context, event, callback) => {
   const response = new Twilio.Response();
@@ -79,9 +79,9 @@ exports.handler = async (context, event, callback) => {
       }
       const checkResponse = await client.verify.v2
         .services(VERIFY_SID)
-        .verificationChecks.create({ to: "+14088025050", code })
+        .verificationChecks.create({ to: ADMINISTRATOR_PHONE, code })
         .then((verification_check) => verification_check);
-      console.log("CHECK RESPONSE", checkResponse);
+
       response.setBody({
         error: false,
         result: {
