@@ -30,3 +30,9 @@
         name: string
         b64: string
     }
+
+
+    export interface ICartItem {
+        product:IProduct
+        size: string
+    }

@@ -40,23 +40,13 @@ exports.handler = async (context, event, callback) => {
               .filter(
                 (item) => new Date(item.dateExpires).getTime() > Date.now()
               )
-              .filter((item) => item.data)
-            }
-          );
+              .map((item) => item.data);
+          });
       })
       .catch((err) => {
         console.error(err);
         return [];
       });
-
-    if (result.length === 0) {
-      response.setBody({
-        error: true,
-        errorObject:
-          "An error occurred retrieving products. See error logs in Twilio Console.",
-      });
-      return callback(null, response);
-    }
 
     response.setBody({
       error: false,

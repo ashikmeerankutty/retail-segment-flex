@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
+import { ICartItem, IProduct } from "../Global.types";
 import { getBaseUrl } from "../util";
 
 export const getSegmentCredentials = createAsyncThunk(
@@ -47,14 +48,13 @@ export const getSyncToken = createAsyncThunk(
   }
 );
 
-
-export const updateShoppingCart = createAsyncThunk<void, string>(
-  "Update Cart",
-  async (item, { rejectWithValue }) => {
+export const getCart = createAsyncThunk<ICartItem[], void>(
+  "Get Cart",
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await Axios.post(`${getBaseUrl()}/website/cart`, {
-        item,
-      }).then((resp) => resp.data.result);
+      const res = await Axios.post(`${getBaseUrl()}/website/cart`).then(
+        (resp) => resp.data.result
+      );
       if (!res) return rejectWithValue("Request failed");
       return res;
     } catch (err) {

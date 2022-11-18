@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import createReducer from "redux-toolkit-asyncthunk-wrapper";
-import { getProducts, getSegmentCredentials, getSyncToken, updateShoppingCart } from "./actions";
+import { getCart, getProducts, getSegmentCredentials, getSyncToken } from "./actions";
 
 const asyncThunkCollection = [
   {
@@ -20,8 +20,8 @@ const asyncThunkCollection = [
     asyncThunk: getSyncToken,
   },
   {
-    stateName: "submitCart",
-    asyncThunk: updateShoppingCart,
+    stateName: "cart",
+    asyncThunk: getCart,
   },
 ];
 const reducer = createReducer(asyncThunkCollection);
