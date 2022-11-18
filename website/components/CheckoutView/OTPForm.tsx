@@ -13,8 +13,6 @@ import {
 } from "@twilio-paste/core";
 import React, { useEffect, useState } from "react";
 import { getBaseUrl } from "../../util";
-import { getWithExpiry } from "./helpers";
-
 export interface OTPFormProps {
   handleSignIn: (code: string) => void;
 }
@@ -23,21 +21,15 @@ const OTPForm = ({ handleSignIn }: OTPFormProps) => {
   const [otpCode, setOTPCode] = useState<string>("");
 
   useEffect(() => {
-    const verified = getWithExpiry("verify");
-    if (!verified) {
       fetch(getBaseUrl() + "/website/one-time-password", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: "verify"
-        })
-      });
-    } else {
-      const code = verified.data;
-      handleSignIn(code);
-    }
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        action: "verify",
+      }),
+    });
   }, []);
 
   return (
