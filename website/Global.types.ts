@@ -21,11 +21,6 @@
         availbleSizes: IAvailbleSize[];
     }
 
-    export type CartProduct = {
-        product: IProduct;
-        size: number;
-    }
-
     export interface IServerImageMetadata {
         name: string
         b64: string
@@ -36,3 +31,10 @@
         product:IProduct
         size: string
     }
+
+    export interface ICartTotals {
+        tax: number;
+        shipping: number;
+        total: number;
+        subtotal: number;
+      }

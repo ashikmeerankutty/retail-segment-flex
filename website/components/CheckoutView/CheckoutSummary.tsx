@@ -7,28 +7,43 @@ import {
   Stack,
   Text,
 } from "@twilio-paste/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LoadingIcons from "react-loading-icons";
-import { CartProduct } from "../../Global.types";
+import { ICartItem, ICartTotals } from "../../Global.types";
 import CheckoutHeader from "./CheckoutHeader";
 import ItemsSummary from "./ItemsSummary";
 import PriceSummary from "./PriceSummary";
 
 export interface CheckoutSummaryProps {
   handlePlaceOrder: () => void;
-  orderedItems: CartProduct[];
+  orderedItems: ICartItem[];
 }
 
 const CheckoutSummary = ({
   handlePlaceOrder,
   orderedItems,
 }: CheckoutSummaryProps) => {
+  const [cartTotals, setCartTotals] = useState<ICartTotals>();
   const getSubTotal = () => {
     let total = 0;
     console.log("ordered", orderedItems);
     orderedItems.forEach((item) => (total += Number(item.product.price)));
     return total;
   };
+
+  useEffect(() => {
+    if (orderedItems) {
+      const subtotal = orderedItems.reduce(
+        (total: number, curr: ICartItem) =>
+          total + parseFloat(curr.product.price),
+        0.0
+      );
+      const tax = subtotal * 0.1;
+      const shipping = subtotal * 0.13;
+      const total = subtotal + tax + shipping;
+      setCartTotals({ subtotal, tax, shipping, total });
+    }
+  }, [orderedItems]);
 
   return (
     <Box marginX={"space200"} marginBottom={"space80"}>
@@ -173,9 +188,9 @@ const CheckoutSummary = ({
             <Box>
               <Box marginBottom={"space130"}>
                 <PriceSummary
-                  subtotal={getSubTotal()}
-                  shippingAndHandling={10.0}
-                  tax={16}
+                  subtotal={cartTotals?.subtotal}
+                  shippingAndHandling={cartTotals?.shipping}
+                  tax={cartTotals?.tax}
                 />
               </Box>
               <Box>

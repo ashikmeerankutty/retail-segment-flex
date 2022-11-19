@@ -1,18 +1,8 @@
 import { Box, Button, Flex, Heading, Stack, Text } from "@twilio-paste/core";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { ICartItem, IProduct } from "../../Global.types";
+import { useCallback, useEffect, useState } from "react";
+import { ICartItem, ICartTotals } from "../../Global.types";
 import useCart from "../../hooks/useCart";
-import { getBaseUrl } from "../../util";
-import SizeGrid from "../SizeSelection/SizeGrid";
-
-interface ICartTotals {
-  tax: number;
-  shipping: number;
-  total: number;
-  subtotal: number;
-}
 
 const RightPane = () => {
   const router = useRouter();
@@ -31,7 +21,7 @@ const RightPane = () => {
         0.0
       );
       const tax = subtotal * 0.1;
-      const shipping = 20.0;
+      const shipping = subtotal * 0.13;
       const total = subtotal + tax + shipping;
       setCartTotals({ subtotal, tax, shipping, total });
     }

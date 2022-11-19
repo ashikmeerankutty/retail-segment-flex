@@ -1,7 +1,5 @@
 import { Box } from "@twilio-paste/core";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { SyncMapItem } from "twilio-sync";
-import { CartProduct } from "../../Global.types";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { getBaseUrl } from "../../util";
 import CheckoutSummary from "./CheckoutSummary";
 import OTPForm from "./OTPForm";

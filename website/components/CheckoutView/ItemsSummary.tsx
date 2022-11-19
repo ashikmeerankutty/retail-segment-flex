@@ -1,12 +1,12 @@
 import { Box, Stack, Text } from "@twilio-paste/core";
 import Image from "next/image";
 import React from "react";
-import { CartProduct } from "../../Global.types";
+import { ICartItem } from "../../Global.types";
 import { getBaseUrl } from "../../util";
 
 export interface ItemsSummaryProps {
   arrivalDate: string;
-  orderedItems: CartProduct[];
+  orderedItems: ICartItem[];
 }
 
 const ItemsSummary = ({ arrivalDate, orderedItems }: ItemsSummaryProps) => {

@@ -1,13 +1,13 @@
 import { Box, Flex, Stack, Text } from "@twilio-paste/core";
 import React from "react";
-import { CartProduct } from "../../Global.types";
+import { ICartItem } from "../../Global.types";
 import OrderedItem from "./OrderedItem";
 
 export interface ThankYouViewProps {
   orderDate?: string;
   orderNumber?: string;
   customerEmail?: string;
-  orderedItems: CartProduct[];
+  orderedItems: ICartItem[];
 }
 
 const ThankYouView = ({
