@@ -222,6 +222,8 @@ async function deploy_sync_maps(env, client, sync_sid) {
   const sync_map_products_fname = env.SYNC_PRODUCT_MAP_FNAME
   const sync_map_cart_fname = env.SYNC_CART_MAP_FNAME
 
+  console.log("env", env)
+
   const productsPath =
     Runtime.getAssets()["/installer/productInformation.json"].path;
 
@@ -254,7 +256,7 @@ async function deploy_sync_maps(env, client, sync_sid) {
           .services(sync_sid)
           .syncMaps(map.sid)
           .remove()
-          .then(() => createSyncMapPromise());
+          .then(() => createSyncMapPromise(fname));
       });
 
   const cartMapSid = await createSyncMapPromise(sync_map_cart_fname)

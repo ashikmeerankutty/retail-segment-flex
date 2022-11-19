@@ -9,18 +9,20 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@twilio-labs/serverless-api": "5.4.4",
     "@twilio/runtime-handler": "1.2.5",
     "assert": "2.0.0",
     "configure-env": "2.0.0-1",
     "fs": "0.0.1-security",
+    "jsonwebtoken": "8.5.1",
     "node-fetch": "3.2.10",
     "path": "0.12.7",
     "redux-toolkit-asyncthunk-wrapper": "1.0.12",
     "twilio": "^3.56"
   },
   "devDependencies": {
-    "twilio-run": "^3.4.5",
-    "husky": "^8.0.0"
+    "husky": "^8.0.0",
+    "twilio-run": "^3.4.5"
   },
   "engines": {
     "node": "14"

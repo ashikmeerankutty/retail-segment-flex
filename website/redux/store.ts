@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import createReducer from "redux-toolkit-asyncthunk-wrapper";
-import { getCart, getProducts, getSegmentCredentials, getSyncToken } from "./actions";
+import { getCart, getProducts, getSyncToken } from "./actions";
+import { getSegmentCredentials } from "./actions-segment";
 
 const asyncThunkCollection = [
   {

@@ -177,6 +177,71 @@ async function getParam(context, key) {
 
       return sid;
     }
+
+    case "CHAT_ADDRESS_SID": {
+      if (context.CHAT_ADDRESS_SID) return context.CHAT_ADDRESS_SID;
+
+      const CHAT_ADDRESS_FNAME = await getParam(
+        context,
+        "CHAT_ADDRESS_FNAME"
+      );
+
+      const addrSid = await client.conversations.addressConfigurations
+        .list({ limit: 20 })
+        .then((addresses) => {
+          const chatAddress = addresses.find(
+            (addr) => addr.friendlyName === CHAT_ADDRESS_FNAME
+          );
+          if (!chatAddress)
+            throw new Error(
+              `Could not find address with friendlyName ${CHAT_ADDRESS_FNAME}`
+            );
+          return chatAddress.sid;
+        });
+
+      await setParam(context, "CHAT_ADDRESS_SID", addrSid);
+      return addrSid;
+    }
+
+    case "CHAT_ADDRESS_FNAME": {
+
+      assert(
+        context.CHAT_ADDRESS_FNAME,
+        "undefined .env environment variable CHAT_ADDRESS_FNAME!!!"
+      );
+
+      return context.CHAT_ADDRESS_FNAME;
+    }
+
+    case "CONVERSATIONS_SERVICE_SID": {
+      if (context.CONVERSATIONS_SERVICE_SID) {
+        return context.CONVERSATIONS_SERVICE_SID;
+      }
+
+      const services = await client.conversations.services.list();
+      let service = services.find(
+        (s) => s.friendlyName === context.FLEX_CHAT_SERVICE_FNAME
+      );
+      if (!service) {
+        console.log(
+          `Conversations Service not found so creating a new Converasations service friendlyName=${context.FLEX_CHAT_SERVICE_FNAME}`
+        );
+        service = await client.conversations.services.create({
+          friendlyName: context.FLEX_CHAT_SERVICE_FNAME,
+        });
+        // Now set the new service to be the default for the account (required by Frontline)
+        const configuration = await client.conversations
+          .configuration()
+          .update({ defaultChatServiceSid: service.sid });
+
+        throw new Error(
+          "Unable to create a Twilio Conversations Service!!! ABORTING!!!"
+        );
+      } else {
+        await setParam(context, "CONVERSATIONS_SERVICE_SID", service.sid);
+        return service.sid;
+      }
+    }
   }
 }
 /* --------------------------------------------------------------------------------

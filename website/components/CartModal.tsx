@@ -25,6 +25,10 @@ const CartModal = ({ numberOfItems, onClose, product, productArgs }: ICartModalP
     router.push('/CheckoutView');
   }
 
+  const handleViewCart = () => {
+    router.push('/CartView');
+  }
+
   return product ? (
     <Box width="500px" height="400px">
       <Flex vertical height="100%" width="100%">
@@ -89,7 +93,7 @@ const CartModal = ({ numberOfItems, onClose, product, productArgs }: ICartModalP
           </Stack>
           <Flex>
             <Flex grow paddingRight="space50">
-              <Button fullWidth variant="secondary">
+              <Button fullWidth variant="secondary" onClick={handleViewCart}>
                 View cart {numberOfItems ? `(${numberOfItems})` : undefined}
               </Button>
             </Flex>

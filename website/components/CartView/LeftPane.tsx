@@ -22,8 +22,9 @@ const LeftPane = () => {
         borderColor={"colorBorderWeak"}
         borderRadius="borderRadius20"
         padding="space30"
+        marginBottom={"space100"}
       >
-        <Heading as="h2" variant="heading20">
+        <Heading as="h3" variant="heading30">
           Free Shipping for Owl Shoes members!
         </Heading>
         <Text as="p">
@@ -36,7 +37,11 @@ const LeftPane = () => {
 
       <Box width="100%">
         {data.map((cartItem: ICartItem) => (
-          <Flex grow key={`cartItem-${cartItem.product.id}`}>
+          <Flex
+            grow
+            key={`cartItem-${cartItem.product.id}`}
+            paddingBottom={"space100"}
+          >
             <Flex paddingRight="space70">
               <Image
                 src={`${getBaseUrl()}/images/products/${
@@ -48,7 +53,7 @@ const LeftPane = () => {
               />
             </Flex>
             <Flex width="100%" height="100%" vertical>
-              <Flex grow>
+              <Flex grow paddingBottom={"space50"}>
                 <Text as="p" fontWeight="fontWeightBold">
                   {cartItem.product.title}
                 </Text>
@@ -66,9 +71,35 @@ const LeftPane = () => {
                   ${cartItem.product.price}
                 </Text>
               </div>
+              <Text as="p">Size {cartItem.size}</Text>
             </Flex>
           </Flex>
         ))}
+
+        <Box paddingBottom={"space50"}>
+          <Stack orientation={"vertical"} spacing="space50">
+            <Text as="p" fontWeight={"fontWeightBold"}>
+              Shipping
+            </Text>
+            <Stack orientation="horizontal" spacing="space10">
+              <Text as="p">Arrives by Mon, Oct 31</Text>
+              <Text as="p" textDecoration="underline">
+                Edit Location
+              </Text>
+            </Stack>
+          </Stack>
+        </Box>
+
+        <Box>
+          <Stack orientation={"vertical"} spacing="space50">
+            <Text as="p" fontWeight={"fontWeightBold"}>
+              Free Pickup
+            </Text>
+            <Text as="p" textDecoration="underline">
+              Find a Store
+            </Text>
+          </Stack>
+        </Box>
       </Box>
     </Box>
   );

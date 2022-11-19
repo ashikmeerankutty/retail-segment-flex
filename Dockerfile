@@ -19,13 +19,6 @@ COPY functions /hls-installer/functions
 # install dependencies in package.json
 RUN npm install
 
-# Webchat files need to be built
-COPY webchat /hls-installer/webchat
-WORKDIR /hls-installer/webchat
-RUN yarn install && yarn build
-WORKDIR /hls-installer/webchat
-RUN mv build/static/js/* /hls-installer/assets
-
 # Website files need to be built
 COPY website /hls-installer/website
 WORKDIR /hls-installer/website

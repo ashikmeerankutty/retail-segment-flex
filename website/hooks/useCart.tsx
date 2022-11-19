@@ -15,5 +15,6 @@ const useCart = () => {
     }
   }, [fetching, fetchingSuccess, fetchingFailure, dispatch]);
   
+  return data
 };
 export default useCart;

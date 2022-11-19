@@ -8,6 +8,7 @@ import OTPForm from "./OTPForm";
 import ThankYouView from "./ThankYouView";
 import Modal from "react-modal";
 import { setWithExpiry } from "./helpers";
+import useCart from "../../hooks/useCart";
 
 export interface CheckoutContentProps {
   setShowNavOnly: Dispatch<SetStateAction<boolean>>;
@@ -30,29 +31,13 @@ const customStyles = {
 };
 
 const CheckoutContent = ({ setShowNavOnly }: CheckoutContentProps) => {
+  const orderedItems = useCart()
   const [showOtp, setShowOtp] = useState<boolean>(true);
   const [showSummary, setShowSummary] = useState<boolean>(false);
   const [showThankYou, setShowThankYou] = useState<boolean>(false);
-  const [orderedItems, setOrderedItems] = useState<CartProduct[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>("");
 
-  useEffect(() => {
-    const getCartItems = async () => {
-      const data = await fetch(getBaseUrl() + "/website/cart");
-      const itemsJson = await data.json();
-      const products = itemsJson.result.map(
-        (mapItem: SyncMapItem) => mapItem.data
-      );
-      setOrderedItems(products);
-    };
-
-    try {
-      getCartItems();
-    } catch (err) {
-      console.log("No more sync items found: ", err);
-    }
-  }, []);
   
   const handleSignIn = async (code: string) => {
     try {
